@@ -123,15 +123,16 @@ def clique(event):
     index = text_area.index("@%s,%s" % (event.x, event.y))  # Obtém o índice do caractere clicado
     linha = int(index.split('.')[0])  # Extrai o número da linha
 
-    # Abre um inputbox como uma msgbox
-    nome = simpledialog.askstring("Input", "Digite o nome para sua variável:")
+    if linha <= 10:
+        # Abre um inputbox como uma msgbox
+        nome = simpledialog.askstring(f"V{linha-1}", "Digite o nome para sua variável:")
 
-    # Verifica se o usuário digitou um valor
-    if nome is not None:
-        list_name[linha-1] = list_name[linha-1] + " " + nome # Atribui o nome à linha clicada
-        text_area.delete("1.0", "end")
-        for index in range(10):
-            text_area.insert("end", list_variable[index] + '\n')
+        # Verifica se o usuário digitou um valor
+        if nome is not None:
+            list_name[linha-1] = list_name[linha-1] + " " + nome # Atribui o nome à linha clicada
+            text_area.delete("1.0", "end")
+            for index in range(10):
+                text_area.insert("end", list_variable[index] + '\n')
 
 def update_listbox_debug(data):
     for index in range (9):
@@ -203,7 +204,7 @@ tooltip.place_forget()
 # Vinculando os eventos de mouse para mostrar e ocultar a tooltip
 text_area.bind("<Enter>", show_tooltip)
 text_area.bind("<Leave>", hide_tooltip)
-text_area.bind("<Button-1>", clique)
+text_area.bind("<Double-Button-1>", clique)
 
 # Frame para entrada e envio de dados
 frame_entry = ctk.CTkFrame(root, width=1000, height=50)
